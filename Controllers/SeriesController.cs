@@ -1,14 +1,16 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
 namespace eStore.Controllers
 {
+    [Authorize]
     public class SeriesController : Controller
     {
         private readonly SqlConnection sql;
@@ -21,6 +23,7 @@ namespace eStore.Controllers
             sql = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
         }
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
             ViewBag.Title = "Drone Series";
@@ -54,7 +57,6 @@ namespace eStore.Controllers
 
             return View(models);
         }
-
 
         [HttpGet]
         public ActionResult Create()
@@ -149,6 +151,8 @@ namespace eStore.Controllers
         [HttpPost]
         public ActionResult Delete(Series model)
         {
+
+            ViewBag.Title = "Delete series";
 
             string query = $"DELETE FROM {table} WHERE name = @Name";
 

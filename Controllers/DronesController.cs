@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using eStore.Data;
 using eStore.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eStore.Controllers
 {
+    [Authorize]
     public class DronesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,7 +21,7 @@ namespace eStore.Controllers
             _context = context;
         }
 
-        // GET: Drones
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             ViewBag.Title = "Drones";
@@ -28,7 +30,7 @@ namespace eStore.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Drones/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             ViewBag.Title = "Drone details";
@@ -49,7 +51,6 @@ namespace eStore.Controllers
             return View(drone);
         }
 
-        // GET: Drones/Create
         public IActionResult Create()
         {
             ViewBag.Title = "Create drone";
@@ -58,9 +59,6 @@ namespace eStore.Controllers
             return View();
         }
 
-        // POST: Drones/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,name,price,year,series_id")] Drone drone)
@@ -77,7 +75,6 @@ namespace eStore.Controllers
             return View(drone);
         }
 
-        // GET: Drones/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             ViewBag.Title = "Edit drone";
@@ -96,9 +93,6 @@ namespace eStore.Controllers
             return View(drone);
         }
 
-        // POST: Drones/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,name,price,year,series_id")] Drone drone)
@@ -134,7 +128,6 @@ namespace eStore.Controllers
             return View(drone);
         }
 
-        // GET: Drones/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             ViewBag.Title = "Delete drone";
@@ -155,7 +148,6 @@ namespace eStore.Controllers
             return View(drone);
         }
 
-        // POST: Drones/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
