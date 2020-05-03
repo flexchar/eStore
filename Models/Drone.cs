@@ -21,6 +21,7 @@ namespace eStore.Models
         [DisplayName("Year")]
         public int year { get; set; }
 
+        [DisplayName("Drone Series")]
         public int series_id { get; set; }
 
         [DisplayName("Drone Series")]
