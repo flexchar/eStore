@@ -14,6 +14,7 @@ namespace eStore.Models
         public int id { get; set; }
 
         [DisplayName("Name")]
+        [Required(ErrorMessage = "Drone series has to have a name")]
         public string name { get; set; }
 
         [DisplayName("Description")]
