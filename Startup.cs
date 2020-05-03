@@ -33,12 +33,16 @@ namespace eStore
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddSingleton<IConfiguration>(Configuration);
 
-            services.AddAuthentication().AddFacebook(facebookOptions =>
+
+            services.AddAuthentication()
+                .AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-            }).AddGoogle(options =>
+            })
+                .AddGoogle(options =>
             {
                 IConfigurationSection googleAuthNSection =
                     Configuration.GetSection("Authentication:Google");
